@@ -65,7 +65,7 @@ class App {
     startServer() {
         const PORT = process.env.PORT || 9090;
         app.listen(PORT, () => {
-            console.log(`SIVAOses Server is listening on port ${PORT}.`);
+            console.log(`NgxOses Server is listening on port ${PORT}.`);
         });
     }
     // end::Start Server
@@ -74,8 +74,8 @@ class App {
     configRoutes() {
         require('./routes/app-routes.js')(app); // 1st way
 
-        let customRoutes = require('./routes/custom-routes.js'); // 2nd way
-        app.use('/custom', customRoutes);
+        let customRoutes = require('./routes/memo-routes.js'); // 2nd way
+        app.use('/api/v1/memo', customRoutes);
     }
     // end::Config global routes
 

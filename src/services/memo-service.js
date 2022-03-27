@@ -1,4 +1,4 @@
-const commons = require('./../commons/commons');
+const commons = require('../commons/commons');
 const {
     jsonResponseTypeMessage,
     jsonResponseType1,
@@ -7,7 +7,7 @@ const {
     jsonResponseType4
 } = require('./base-service');
 
-exports.defaultRoutes = (request, response) => {
+exports.saySomething = (request, response) => {
     const bots = [
         {
             username: 'bot1',
@@ -32,7 +32,3 @@ exports.defaultRoutes = (request, response) => {
     jsonResponseType4(response, arrays, commons.httpStatus.OK);
     */
 }
-
-exports.defaultErrorRoutes = (request, response) => {
-    jsonResponseTypeMessage(response, 'This is text message defaultErrorRoutes');
-};
