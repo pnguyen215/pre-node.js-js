@@ -14,3 +14,4 @@ exports.bodyParser = require('body-parser');
 exports.logger = require('morgan');
 exports.dotenv = require('dotenv');
 exports.httpStatus = require('http-status');
+exports.chalk = require('chalk');
