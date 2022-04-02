@@ -15,7 +15,7 @@ const infoFilter = winston.format((info, option) => {
 const attributes = {
     common: {
         dateTimeFormatted: 'YYYY-MM-DD hh:mm:ss.SSS A',
-        dateRotatePattern: 'YYYY-MM-DD-HH-MM'
+        dateRotatePattern: 'YYYY-MM-DD'
     },
     destination: {
         infoPath: './logs/_1_apps_info.log',

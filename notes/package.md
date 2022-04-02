@@ -1,3 +1,8 @@
+### Backup 1
+
+> On time: 2022-04-03 12:13 AM
+
+```json
 {
   "name": "oses-blibs",
   "version": "1.0.0",
@@ -49,6 +54,7 @@
     "typescript": "^4.2.4"
   },
   "dependencies": {
+    "eslint-plugin-jest": "^24.1.0",
     "http-status": "^1.2.0",
     "jest": "^26.5.3",
     "morgan": "^1.9.0",
@@ -58,3 +64,5 @@
     "winston-daily-rotate-file": "^4.6.1"
   }
 }
+
+```
