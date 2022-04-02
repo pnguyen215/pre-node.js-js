@@ -17,3 +17,4 @@ exports.httpStatus = require('http-status');
 exports.chalk = require('chalk');
 exports.morgan_json = require('morgan-json');
 exports.winston = require('winston');
+exports.winston_rotate = require('winston-daily-rotate-file');
