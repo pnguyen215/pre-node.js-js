@@ -5,7 +5,7 @@ let customService = require('../services/memo-service');
 let loggerMiddleware = require('../middleware/memoLoggerMiddleware');
 
 // begin::Define router with: POST, GET, PUT, DELETE here
-router.get('/say', loggerMiddleware.writeHttpRequestTails, customService.saySomething);
+router.get('/say', customService.saySomething);
 
 router.get('/', customService.saySomething);
 

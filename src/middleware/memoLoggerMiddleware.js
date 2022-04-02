@@ -10,7 +10,7 @@ const getActualRequestDurationInMilliseconds = start => {
 exports.writeHttpRequestTails = (request, response, next) => {
 
     // begin::Declare path to save file log request
-    const path = 'logs/http_request.log';
+    const path = './logs/http_request.log';
 
     let current_datetime = new Date();
     let formatted_date =

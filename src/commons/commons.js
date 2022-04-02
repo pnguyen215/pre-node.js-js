@@ -15,3 +15,5 @@ exports.logger = require('morgan');
 exports.dotenv = require('dotenv');
 exports.httpStatus = require('http-status');
 exports.chalk = require('chalk');
+exports.morgan_json = require('morgan-json');
+exports.winston = require('winston');

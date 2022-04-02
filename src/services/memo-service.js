@@ -1,3 +1,4 @@
+const loggerWinston = require('./../middleware/loggerWinstonMiddleware').child({ requestId: 'memo-service-001' });
 const commons = require('../commons/commons');
 const {
     jsonResponseTypeMessage,
@@ -7,7 +8,8 @@ const {
     jsonResponseType4
 } = require('./base-service');
 
-exports.saySomething = (request, response) => {
+
+exports.saySomething = (request, response, next) => {
     const bots = [
         {
             username: 'bot1',
@@ -21,8 +23,9 @@ exports.saySomething = (request, response) => {
             username: 'bot3',
             id: 3
         },
-    ]
+    ];
 
+    loggerWinston.info('saySomething::log memo function via winston with data', bots);
     jsonResponseType1(response, "This is list of bots", bots);
     /*
     jsonResponseTypeMessage(response, 'This is text message');

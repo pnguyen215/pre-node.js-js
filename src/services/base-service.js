@@ -56,21 +56,26 @@ function buildResponseType4(data, statusCode) {
 }
 
 exports.jsonResponseTypeMessage = (response, message) => {
+    response.setHeader('Content-Type', 'application/json');
     response.status(200).json(buildResponseMessage(message));
 };
 
 exports.jsonResponseType1 = (response, message, data) => {
+    response.setHeader('Content-Type', 'application/json');
     response.status(200).json(buildResponseType1(message, data));
 }
 
 exports.jsonResponseType2 = (response, message, data, statusCode) => {
+    response.setHeader('Content-Type', 'application/json');
     response.status(statusCode).json(buildResponseType2(message, data, statusCode));
 }
 
 exports.jsonResponseType3 = (response, message, statusCode) => {
+    response.setHeader('Content-Type', 'application/json');
     response.status(statusCode).json(buildResponseType3(message, statusCode));
 }
 
 exports.jsonResponseType4 = (response, data, statusCode) => {
+    response.setHeader('Content-Type', 'application/json');
     response.status(statusCode).json(buildResponseType4(data, statusCode));
 }

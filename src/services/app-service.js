@@ -1,3 +1,4 @@
+const loggerWinston = require('./../middleware/loggerWinstonMiddleware').child({ requestId: 'app-service-002' });
 const commons = require('./../commons/commons');
 const {
     jsonResponseTypeMessage,

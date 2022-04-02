@@ -1,3 +1,6 @@
+const { logErrorMiddleware, responseError } = require('./middleware/errorHandlerMiddleware');
+const loggerMorganHttp = require('./middleware/loggerMorganHttpMiddleware');
+const loggerWinston = require('./middleware/loggerWinstonMiddleware');
 import {
     express,
     dotenv,
@@ -6,6 +9,7 @@ import {
     paths,
     cors
 } from './commons/commons';
+
 const app = express();
 
 class App {
@@ -19,7 +23,7 @@ class App {
     }
 
     corsOptions = {
-        origin: "",
+        origin: '',
         optionsSuccessStatus: 200
     };
 
@@ -29,11 +33,12 @@ class App {
         }
 
         switch (process.env.NODE_ENV) {
-            case 'dev': {
+            case 'dev' || 'DEV': {
                 this.corsOptions.origin = `${process.env.HOST_DEV}` + `${process.env.PORT}`;
                 break;
             }
-            case 'prod': {
+
+            case 'prod' || 'PROD': {
                 this.corsOptions.origin = `${process.env.HOST_PROD}` + `${process.env.PORT}`;
                 break;
             }
@@ -41,24 +46,31 @@ class App {
         return this.corsOptions;
     }
 
-    logDev() {
-        // begin::Log console
-        console.log('==> Workplace is running on: ', `${process.env.NODE_ENV}`, ` - on ${new Date()}`);
-        console.log(this.corsOptions);
-        // end::Log console
+    logCommon() {
+        loggerWinston.info(`Currently, time zone = ${process.env.PARAMS_TIME_ZONE}`);
+        loggerWinston.info(`Workplace is running on: ${process.env.NODE_ENV}`);
+        loggerWinston.info(this.corsOptions);
     }
 
     middleware() {
-        this.logDev();
-        // begin::Log API
+        // begin::Style common
+        process.env.TZ = process.env.PARAMS_TIME_ZONE;
+        // begin::Style common
+        this.logCommon();
         app.use(logger('dev'));
-        // end::Log API
+        // begin::Json Handler
         app.use(bodyParser.json());
         app.use(bodyParser.urlencoded({
             extended: true
         }));
         app.use(express.static(paths.join(__dirname, 'public')));
+        // begin::Style cors
         app.use(cors(this.corsOptions));
+        // begin::Error Handler Trigger, use next() function to callback error middleware
+        app.use(logErrorMiddleware);
+        app.use(responseError);
+        // begin::Morgan HTTP Request
+        app.use(loggerMorganHttp);
     }
 
     // begin::Start Server
