@@ -36,6 +36,10 @@ function buildResponseType1(message, data) {
         model.total = data.length;
     }
 
+    if (data instanceof Object) {
+        model.total = 1;
+    }
+
     return model;
 }
 

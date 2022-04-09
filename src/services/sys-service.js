@@ -1,6 +1,7 @@
 const loggerWinston = require('./../middleware/loggerWinstonMiddleware').child({ requestId: 'sys-service-003' });
 const commons = require('../commons/commons');
 const { allNotNull } = require('./../utils/objectUtils');
+const { findDirToUpload } = require('./../utils/osUtils');
 const {
     isDirectoryExisted,
     createDirectories,
@@ -20,20 +21,20 @@ exports.downloadSources = async (request, response, next) => {
     const path = request.body.path;
 
     if (!allNotNull(path)) {
-        jsonResponseType3(
+        return jsonResponseType3(
             response,
             'Path is required',
             commons.httpStatus.BAD_REQUEST);
     }
 
     if (!(await isDirectoryExisted(path))) {
-        jsonResponseType3(
+        return jsonResponseType3(
             response,
             'Path not found',
             commons.httpStatus.BAD_REQUEST);
     }
 
-    response.download(path, getFullFileExtensionFromPath(path), (error) => {
+    return response.download(path, getFullFileExtensionFromPath(path), (error) => {
         if (error) {
             jsonResponseType2(response, error.stack, request.body, commons.httpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -45,27 +46,27 @@ exports.downloadZip = async (request, response, next) => {
     const path = request.body.path;
 
     if (!allNotNull(path)) {
-        jsonResponseType3(
+        return jsonResponseType3(
             response,
             'Path is required',
             commons.httpStatus.BAD_REQUEST);
     }
 
     if (!(await isEndWith(path, '.zip'))) {
-        jsonResponseType3(
+        return jsonResponseType3(
             response,
             `Path is required end with extension '.zip'`,
             commons.httpStatus.BAD_REQUEST);
     }
 
     if (!(await isDirectoryExisted(path))) {
-        jsonResponseType3(
+        return jsonResponseType3(
             response,
             'Path not found',
             commons.httpStatus.BAD_REQUEST);
     }
 
-    response.download(path, getFullFileExtensionFromPath(path), (error) => {
+    return response.download(path, getFullFileExtensionFromPath(path), (error) => {
         if (error) {
             jsonResponseType2(response, error.stack, request.body, commons.httpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -80,28 +81,28 @@ exports.zipDirectories = async (request, response, next) => {
     const enabledZipLocal = request.query.enabledZipLocal;
 
     if (!allNotNull(path)) {
-        jsonResponseType3(
+        return jsonResponseType3(
             response,
             'Path is required',
             commons.httpStatus.BAD_REQUEST);
     }
 
     if (!allNotNull(zipPath)) {
-        jsonResponseType3(
+        return jsonResponseType3(
             response,
             'zipPath is required',
             commons.httpStatus.BAD_REQUEST);
     }
 
     if (!(await isEndWith(zipPath, '.zip'))) {
-        jsonResponseType3(
+        return jsonResponseType3(
             response,
             `zipPath is required end with extension '.zip'`,
             commons.httpStatus.BAD_REQUEST);
     }
 
     if (!(await isDirectoryExisted(path))) {
-        jsonResponseType3(
+        return jsonResponseType3(
             response,
             'Path not found',
             commons.httpStatus.BAD_REQUEST);
@@ -129,7 +130,35 @@ exports.zipDirectories = async (request, response, next) => {
         response.send(dataDownloaded);
     } catch (error) {
         loggerWinston.error(`Can't zip or download zip folder, cause: ${error}`);
-        jsonResponseType2(response, error.stack, request.body, commons.httpStatus.INTERNAL_SERVER_ERROR);
+        return jsonResponseType2(response, error.stack, request.body, commons.httpStatus.INTERNAL_SERVER_ERROR);
     }
 
+}
+
+exports.upload = (request, response, next) => {
+
+    if (!request.files) {
+        return jsonResponseType3(
+            response,
+            'File is required',
+            commons.httpStatus.BAD_REQUEST);
+    }
+
+    const file = request.files.file;
+    const repository = findDirToUpload() + '/' + file.name;
+
+    file.mv(repository, (error) => {
+        if (error) {
+            return jsonResponseType3(
+                response,
+                error.stack,
+                commons.httpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return jsonResponseType2(
+            response,
+            'File has been uploaded successfully',
+            repository,
+            commons.httpStatus.OK);
+    })
 }

@@ -22,3 +22,4 @@ exports.rxjs = require('rxjs');
 exports.axios = require('axios');
 exports.admZip = require('adm-zip');
 exports.queryString = require('querystring');
+exports.upload = require('express-fileupload'); // ref: https://github.com/richardgirges/express-fileupload#readme

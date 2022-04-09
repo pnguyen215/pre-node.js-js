@@ -9,4 +9,6 @@ router.post('/download-zip', sysService.downloadZip);
 
 router.post('/download-resources', sysService.downloadSources);
 
+router.post('/upload', sysService.upload);
+
 module.exports = router;

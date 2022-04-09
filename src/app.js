@@ -7,7 +7,8 @@ import {
     logger,
     bodyParser,
     paths,
-    cors
+    cors,
+    upload
 } from './commons/commons';
 
 const app = express();
@@ -71,6 +72,16 @@ class App {
         app.use(responseError);
         // begin::Morgan HTTP Request
         app.use(loggerMorganHttp);
+        // begin::Upload
+        app.use(upload(
+            {
+                createParentPath: true,
+                limits: {
+                    fileSize: 1024 * 1024 // 1 MB
+                },
+                abortOnLimit: true
+            }
+        ));
     }
 
     // begin::Start Server
