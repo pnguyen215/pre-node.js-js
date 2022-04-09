@@ -88,6 +88,9 @@ class App {
 
         let customRoutes = require('./routes/memo-routes.js'); // 2nd way
         app.use('/api/v1/memo', customRoutes);
+
+        let sysRoutes = require('./routes/sys-files-routes');
+        app.use('/api/v1/sys-files', sysRoutes);
     }
     // end::Config global routes
 

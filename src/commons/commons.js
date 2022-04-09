@@ -19,3 +19,6 @@ exports.morgan_json = require('morgan-json');
 exports.winston = require('winston');
 exports.winston_rotate = require('winston-daily-rotate-file');
 exports.rxjs = require('rxjs');
+exports.axios = require('axios');
+exports.admZip = require('adm-zip');
+exports.queryString = require('querystring');
