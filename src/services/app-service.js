@@ -24,16 +24,16 @@ exports.defaultRoutes = (request, response) => {
         },
     ]
 
-    jsonResponseType1(response, "This is list of bots", bots);
+    return jsonResponseType1(response, "This is list of bots", bots);
     /*
-    jsonResponseTypeMessage(response, 'This is text message');
-    jsonResponseType1(response, "This is Message", arrays);
-    jsonResponseType2(response, "This is Message", arrays, commons.httpStatus.OK);
-    jsonResponseType3(response, "This is Message", commons.httpStatus.OK);
-    jsonResponseType4(response, arrays, commons.httpStatus.OK);
+    return jsonResponseTypeMessage(response, 'This is text message');
+    return jsonResponseType1(response, "This is Message", arrays);
+    return jsonResponseType2(response, "This is Message", arrays, commons.httpStatus.OK);
+    return jsonResponseType3(response, "This is Message", commons.httpStatus.OK);
+    return jsonResponseType4(response, arrays, commons.httpStatus.OK);
     */
 }
 
 exports.defaultErrorRoutes = (request, response) => {
-    jsonResponseTypeMessage(response, 'This is text message defaultErrorRoutes');
+    return jsonResponseTypeMessage(response, 'This is text message defaultErrorRoutes');
 };
